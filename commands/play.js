@@ -26,30 +26,18 @@ module.exports = {
             break
             case 'volume':
                 queue.get('dispatcher').setVolume(Number(query[0] / 100))
-                console.log(Number(query[0] / 100))
             break
             case 'loop':
                 var connection =  await message.member.voice.channel.join()
 
                 function looping () {
                     queue.get('dispatcher').on('finish', () => {
-                
-                        console.log('dispatcher finish was executed')
                         var dispatcher = connection.play(ytdl(queue.get('sound').url, { filter: 'audioonly' },{ type: 'FFmpeg' }))
                         queue.set('dispatcher',dispatcher)
-                        console.log('audio.mp3 has finished playing!')
                         looping()
                     });
                 }
                 looping()
-                console.log('loop cas was executed')
-                
-                
-                // queue.get('dispatcher').on('finish', () => {
-                //     console.log('dispatcher finish was executed')
-                //     connection.play(ytdl(queue.get('sound').url, { filter: 'audioonly' },{ type: 'FFmpeg' }))
-                //     console.log('audio.mp3 has finished playing!')
-                // });
             break
         }
         
