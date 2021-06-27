@@ -1,5 +1,11 @@
 const fs = require('fs');
 
+const express = require('express')
+
+const PORT = process.env.PORT || 5000
+
+express().listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
 const Discord = require('discord.js')
 
 const client = new Discord.Client()
