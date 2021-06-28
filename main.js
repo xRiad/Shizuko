@@ -28,17 +28,15 @@ for (const file of commandFiles) {
 }
 
 client.on('message', message => {
-    if(!message.content.startsWith(prefix) || message.author.bot) return
+	if(!message.content.startsWith(prefix) || message.author.bot) return
 
-    const args = message.content.slice(prefix.length).split(/ +/)
-    
-    const commandName = args.shift().toLocaleLowerCase()
-    // if ( !client.commands.has(commandName)) return
+	const args = message.content.slice(prefix.length).split(/ +/)
+	
+	const commandName = args.shift().toLocaleLowerCase()
+	if ( !client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)) && !client.commands.has(commandName) ) return
 	try {
 		var command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName))
 		if (command) command.execute(message,args, commandName)
-		
-
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
